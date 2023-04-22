@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.model.Livro;
 import com.example.demo.model.Pessoa;
 import com.example.demo.model.Transacao;
@@ -20,6 +21,9 @@ public class TransacaoService {
     private PessoaRepository pessoaRepository;
     private LivroRepository livroRepository;
 
+
+
+
     public void realizarCompra(Long pessoaId, Long livroId) {
         Pessoa pessoa = pessoaRepository.findById(Math.toIntExact(pessoaId)).orElseThrow();
         Livro livro = livroRepository.findById(Math.toIntExact(livroId)).orElseThrow();
@@ -31,15 +35,29 @@ public class TransacaoService {
         System.out.println(transacaorepository);
 
 
-        if (pessoaSaldo.compareTo(precoLivro) >= 0) {
+        if (pessoaSaldo.compareTo(precoLivro) >= 0 && livro.getQuantidade() > 0) {
             System.out.println(pessoa.getNome() + " possui saldo para compra do livro " + livro.getNome());
             BigDecimal custo = pessoaSaldo.subtract(precoLivro);
             pessoa.setSaldo(custo);
             livro.setQuantidade(livro.getQuantidade() - 1);
+            transacao.setStatus(StatusEnum.COMPRA);
             transacaorepository.save(transacao);
         } else {
-            System.out.println(pessoa.getNome() + " não possui saldo para compra");
+            System.out.println(pessoa.getNome() + " não possui saldo para compra/Livro não existe no estoque!");
         }
+    }
+
+    public Transacao cancelarTransacao(Integer transacaoId) {
+        Transacao transacao = transacaorepository.getReferenceById(transacaoId);
+        if(transacao.getStatus().equals(StatusEnum.COMPRA)) {
+            Livro livro = transacao.getLivro();
+            livro.setQuantidade(livro.getQuantidade() + 1);
+            Pessoa pessoa = transacao.getPessoa();
+            pessoa.setSaldo(pessoa.getSaldo().add(livro.getPreco()));
+            transacao.cancelarTransacao();
+        }
+
+        return transacao;
     }
 }
 

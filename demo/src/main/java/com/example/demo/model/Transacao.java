@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +27,20 @@ public class Transacao {
     @JoinColumn(name = "livroId")
     private Livro livro;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "STATUS_COMPRA")
+    private StatusEnum status;
+
+
     private BigDecimal precoTotal;
 
     private BigDecimal saldo;
 
-    //public int getId() {
-    //    return transacaoId;
+    private StatusEnum statusCompra;
+
+    public int getId() {
+        return transacaoId;
+    }
     //}
 
     //public void setId(Long id) {
@@ -70,12 +79,33 @@ public class Transacao {
         this.saldo = saldo;
     }
 
-    public Transacao(Pessoa pessoa, Livro livro, BigDecimal saldo,BigDecimal precoTotal){
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public StatusEnum getStatusCompra() {
+        return statusCompra;
+    }
+
+    public void setStatusCompra(StatusEnum statusCompra) {
+        this.statusCompra = statusCompra;
+    }
+
+    public Transacao(Pessoa pessoa, Livro livro, BigDecimal saldo, BigDecimal precoTotal){
         this.pessoa = pessoa;
         this.livro = livro;
         this.saldo = saldo;
         this.precoTotal = precoTotal;
-    };
+    }
+
+    public Transacao cancelarTransacao(){
+        setStatusCompra(StatusEnum.CANCELAMENTO);
+        return this;
+    }
 
     protected Transacao(){};
 

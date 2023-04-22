@@ -31,14 +31,22 @@ public class TransacaoController {
 
 
     @PostMapping("/{pessoaId}/comprar/{livroId}")
-    public ResponseEntity<Void> realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
         transacaoService.realizarCompra(pessoaId, livroId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
+    @PutMapping("/{transacaoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Transacao cancelarCompra(@PathVariable Integer transacaoId) {
+        return transacaoService.cancelarTransacao(transacaoId);
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Transacao> getTransacoes() {
         return repository.findAll();
     }
+
+
 }
