@@ -41,11 +41,6 @@ public class Transacao {
     public int getId() {
         return transacaoId;
     }
-    //}
-
-    //public void setId(Long id) {
-     //   this.transacaoId = Math.toIntExact(id);
-    //}
 
     public Pessoa getPessoa() {
         return pessoa;
