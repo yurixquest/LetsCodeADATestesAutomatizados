@@ -16,10 +16,6 @@ class TransacaoTest {
     BigDecimal precoTotal = BigDecimal.valueOf(50.0);
 
     @Test
-    void getId() {
-    }
-
-    @Test
     void getPessoa() {
         Transacao transacao = new Transacao(pessoa, livro, saldo, precoTotal);
 
@@ -123,17 +119,11 @@ class TransacaoTest {
 
     @Test
     void cancelarTransacao() {
-        //Estou com duvida se está certo
         Transacao transacao = new Transacao(pessoa, livro, saldo, precoTotal);
 
-        transacao.setStatusCompra(StatusEnum.CANCELAMENTO);
+        transacao.cancelarTransacao();
 
         assertEquals(StatusEnum.CANCELAMENTO, transacao.getStatusCompra(), "Deveria trazer o preco 10");
-    }
-
-    @Test
-    void getTransacaoId() {
-
     }
 
     @Test
@@ -141,10 +131,6 @@ class TransacaoTest {
         Transacao transacao = new Transacao(pessoa, livro, saldo, precoTotal);
 
         assertEquals(precoTotal, transacao.getPrecoTotal(), "Deveria trazer o preco: 50");
-    }
-
-    @Test
-    void setTransacaoId() {
     }
 
     @Test
