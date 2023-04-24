@@ -24,7 +24,7 @@ public class TransacaoService {
 
 
 
-    public void realizarCompra(Long pessoaId, Long livroId) {
+    public StatusEnum realizarCompra(Long pessoaId, Long livroId) {
         Pessoa pessoa = pessoaRepository.findById(Math.toIntExact(pessoaId)).orElseThrow();
         Livro livro = livroRepository.findById(Math.toIntExact(livroId)).orElseThrow();
         Transacao transacao = new Transacao(pessoa, livro, pessoa.getSaldo(), livro.getPreco());
@@ -43,8 +43,9 @@ public class TransacaoService {
             transacao.setStatus(StatusEnum.COMPRA);
             transacaorepository.save(transacao);
         } else {
-            System.out.println(pessoa.getNome() + " não possui saldo para compra/Livro não existe no estoque!");
+            transacao.setStatus(StatusEnum.NEGADO);
         }
+        return transacao.getStatus();
     }
 
     public Transacao cancelarTransacao(Integer transacaoId) {

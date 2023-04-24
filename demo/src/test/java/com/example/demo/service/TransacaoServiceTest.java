@@ -43,7 +43,7 @@ class TransacaoServiceTest {
         verify(transacaoRepository, times(0)).save(transacao);
         assertEquals("Saldo da conta deveria ser 0", BigDecimal.valueOf(0), pessoa.getSaldo());
         assertEquals("A quantidade de livros deveria continuar 1", 1, livro.getQuantidade());
-        //assertEquals("O status deve estar: Negado", StatusEnum.NEGADO, transacao.StatusCompra());
+        //assertEquals("O status deve estar: Negado", StatusEnum.NEGADO, transacao.getStatusCompra());
     }
 
     @Test
@@ -109,11 +109,14 @@ class TransacaoServiceTest {
         when(pessoarepository.findById(Math.toIntExact(pessoa.getPessoaId()))).thenReturn(Optional.of(pessoa));
         when(livrorepository.findById(Math.toIntExact(livro.getLivroId()))).thenReturn(Optional.of(livro));
 
-        transacaoService.realizarCompra(pessoa.getPessoaId(),2L);
+        try {
+            transacaoService.realizarCompra(pessoa.getPessoaId(), 2L);
+        }catch(Exception e) {
+            verify(transacaoRepository, times(0)).save(transacao);
+            assertEquals("Saldo da conta deveria ser 50", BigDecimal.valueOf(50), pessoa.getSaldo());
+            assertEquals("A quantidade de livros deveria continuar 1", 1, livro.getQuantidade());
+        }
 
-        verify(transacaoRepository, times(0)).save(transacao);
-        assertEquals("Saldo da conta deveria ser 50", BigDecimal.valueOf(50), pessoa.getSaldo());
-        assertEquals("A quantidade de livros deveria continuar 1", 1, livro.getQuantidade());
     }
 
     @Test

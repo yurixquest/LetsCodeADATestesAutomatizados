@@ -1,1 +1,5 @@
+com\example\demo\model\PessoaTest.class
 com\example\demo\DemoApplicationTests.class
+com\example\demo\model\LivroTest.class
+com\example\demo\service\TransacaoServiceTest.class
+com\example\demo\model\TransacaoTest.class
