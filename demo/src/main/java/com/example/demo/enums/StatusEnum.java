@@ -2,7 +2,7 @@ package com.example.demo.enums;
 
 public enum StatusEnum {
 
-    COMPRA(1), CANCELAMENTO(0);
+    CANCELAMENTO(0), COMPRA(1),  NEGADO(2);
     private Integer statusTypeId;
     StatusEnum(Integer statusId){
         this.statusTypeId = statusId;

@@ -46,9 +46,9 @@ class PessoaControllerTest {
 
         final PessoaRepository repository;
         BigDecimal valor = BigDecimal.TEN;
-        Pessoa criarpessoa = new Pessoa("Luis Antonio", "000.000.000-00", "08/08/1994", "email@email.com.br", valor);
+        Pessoa criarpessoa = new Pessoa("Luis Antonio", "000.000.000-00", LocalDate.of(1944, 8, 8), "email@email.com.br", valor);
 
-        String response = mvc.perform(MockMvcRequestBuilders.post("/pessoas")
+        String response = mvc.perform(MockMvcRequestBuilders.post(baseUri)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(criarpessoa)))
                 .andExpect(status().isCreated()).
