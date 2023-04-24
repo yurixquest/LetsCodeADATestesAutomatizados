@@ -35,7 +35,6 @@ class LivroTest {
     void setEdicao() {
         Livro livro = new Livro();
         livro.setEdicao("Português");
-
         assertEquals("Português", livro.getEdicao(), "Deveria trazer a edição: Português");
     }
 

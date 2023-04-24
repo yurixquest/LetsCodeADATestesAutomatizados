@@ -24,7 +24,7 @@ public class Pessoa {
     private long pessoaId;
 
     @Column(name = "DATA_NASCIMENTO")
-    private LocalDate dataNascimento;
+    private String dataNascimento;
 
     @Column(name = "CPF")
     private String cpf;
@@ -38,7 +38,7 @@ public class Pessoa {
     @Column(name = "SALDO")
     private BigDecimal saldo;
 
-    public Pessoa(String nome, String cpf, LocalDate dataNascimento, String email, BigDecimal saldo) {
+    public Pessoa(String nome, String cpf, String dataNascimento, String email, BigDecimal saldo) {
         setDataNascimento(dataNascimento);
         this.cpf = cpf;
         this.nome = nome;
@@ -51,12 +51,6 @@ public class Pessoa {
     //@OneToMany(mappedBy = "pessoa")
     //private List<Transacao> transacoes;
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        if (dataNascimento.plusYears(18).isAfter(LocalDate.now())) {
-            System.out.println("Valor inválido");
-        } else {
-            this.dataNascimento = dataNascimento;
-        }
-    }
+
 
 }

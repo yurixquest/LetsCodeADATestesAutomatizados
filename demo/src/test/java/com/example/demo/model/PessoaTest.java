@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PessoaTest {
 
+    String dataNascimento = "22/07/1994";
     @Test
     void setDataNascimento() {
         Pessoa pessoa = new Pessoa();
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         pessoa.setDataNascimento(dataNascimento);
 
         assertEquals(dataNascimento, pessoa.getDataNascimento(), "Deveria vir a data 30-08-1998");
@@ -20,7 +20,7 @@ class PessoaTest {
 
     @Test
     void getPessoaId() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
+
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
         pessoa.setPessoaId(1);
         assertEquals(1, pessoa.getPessoaId(), "Deveria trazer o id: 1");
@@ -28,7 +28,6 @@ class PessoaTest {
 
     @Test
     void getDataNascimento() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals(dataNascimento, pessoa.getDataNascimento(), "Deveria trazer a data: 30-08-1998");
@@ -36,7 +35,6 @@ class PessoaTest {
 
     @Test
     void getCpf() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals("123.456.789", pessoa.getCpf(), "Deveria trazer o cpf: 123.456.789");
@@ -44,7 +42,6 @@ class PessoaTest {
 
     @Test
     void getEmail() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals("ana@gmail.com", pessoa.getEmail(), "Deveria trazer o email: ana@gmail.com");
@@ -52,7 +49,6 @@ class PessoaTest {
 
     @Test
     void getNome() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals("Ana", pessoa.getNome(), "Deveria trazer o nome: Ana");
@@ -60,7 +56,6 @@ class PessoaTest {
 
     @Test
     void getSaldo() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals(BigDecimal.TEN, pessoa.getSaldo(), "Deveria trazer o saldo 10");
@@ -100,7 +95,6 @@ class PessoaTest {
 
     @Test
     void setSaldo() {
-        LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
         Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
 
         assertEquals(BigDecimal.TEN, pessoa.getSaldo(), "Deveria trazer o saldo: 10");

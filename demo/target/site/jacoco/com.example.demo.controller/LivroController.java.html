@@ -4,27 +4,37 @@ import com.example.demo.model.Livro;
 import com.example.demo.model.Pessoa;
 import com.example.demo.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping(&quot;/livro&quot;)
-<span class="fc" id="L14">@RequiredArgsConstructor</span>
+<span class="fc" id="L16">@RequiredArgsConstructor</span>
 public class LivroController {
 
     private final Livro livro;
     private final LivroRepository repository;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Livro createLivro(@RequestBody Livro livro) {
-<span class="nc" id="L22">        return repository.save(livro);</span>
+<span class="fc" id="L25">        return repository.save(livro);</span>
+    }
+
+    @GetMapping(&quot;{id}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    public Optional&lt;Livro&gt; getLivro(@PathVariable int id) {
+<span class="nc" id="L31">        return repository.findById(id);</span>
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List&lt;Livro&gt; getLivros() {
-<span class="nc" id="L27">        return repository.findAll();</span>
+<span class="fc" id="L37">        return repository.findAll();</span>
     }
 
 

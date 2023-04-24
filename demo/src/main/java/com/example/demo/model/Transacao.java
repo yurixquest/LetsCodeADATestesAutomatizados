@@ -29,14 +29,12 @@ public class Transacao {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "STATUS_COMPRA")
-    private StatusEnum status;
+    private StatusEnum statusCompra;
 
 
     private BigDecimal precoTotal;
 
     private BigDecimal saldo;
-
-    private StatusEnum statusCompra;
 
     public int getId() {
         return transacaoId;
@@ -80,20 +78,13 @@ public class Transacao {
     }
 
     public StatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
-
-    public StatusEnum getStatusCompra() {
         return statusCompra;
     }
 
-    public void setStatusCompra(StatusEnum statusCompra) {
+    public void setStatus(StatusEnum statusCompra) {
         this.statusCompra = statusCompra;
     }
+
 
     public Transacao(Pessoa pessoa, Livro livro, BigDecimal saldo, BigDecimal precoTotal){
         this.pessoa = pessoa;
@@ -103,7 +94,7 @@ public class Transacao {
     }
 
     public Transacao cancelarTransacao(){
-        setStatusCompra(StatusEnum.CANCELAMENTO);
+        setStatus(StatusEnum.CANCELAMENTO);
         return this;
     }
 

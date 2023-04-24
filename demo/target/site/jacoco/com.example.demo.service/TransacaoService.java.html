@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransacaoService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">demo</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.service</a> &gt; <span class="el_source">TransacaoService.java</span></div><h1>TransacaoService.java</h1><pre class="source lang-java linenums">package com.example.demo.service;
 
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.model.Livro;
 import com.example.demo.model.Pessoa;
 import com.example.demo.model.Transacao;
@@ -13,34 +14,51 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-<span class="fc" id="L16">@AllArgsConstructor</span>
+<span class="fc" id="L17">@AllArgsConstructor</span>
 public class TransacaoService {
 
     private TransacaoRepository transacaorepository;
     private PessoaRepository pessoaRepository;
     private LivroRepository livroRepository;
 
+
+
+
     public void realizarCompra(Long pessoaId, Long livroId) {
-<span class="nc" id="L24">        Pessoa pessoa = pessoaRepository.findById(Math.toIntExact(pessoaId)).orElseThrow();</span>
-<span class="nc" id="L25">        Livro livro = livroRepository.findById(Math.toIntExact(livroId)).orElseThrow();</span>
-<span class="nc" id="L26">        Transacao transacao = new Transacao(pessoa, livro, pessoa.getSaldo(), livro.getPreco());</span>
-<span class="nc" id="L27">        BigDecimal pessoaSaldo = pessoa.getSaldo();</span>
-<span class="nc" id="L28">        BigDecimal precoLivro = livro.getPreco();</span>
+<span class="fc" id="L28">        Pessoa pessoa = pessoaRepository.findById(Math.toIntExact(pessoaId)).orElseThrow();</span>
+<span class="fc" id="L29">        Livro livro = livroRepository.findById(Math.toIntExact(livroId)).orElseThrow();</span>
+<span class="fc" id="L30">        Transacao transacao = new Transacao(pessoa, livro, pessoa.getSaldo(), livro.getPreco());</span>
+<span class="fc" id="L31">        BigDecimal pessoaSaldo = pessoa.getSaldo();</span>
+<span class="fc" id="L32">        BigDecimal precoLivro = livro.getPreco();</span>
 
-<span class="nc" id="L30">        System.out.println(transacao);</span>
-<span class="nc" id="L31">        System.out.println(transacaorepository);</span>
+<span class="fc" id="L34">        System.out.println(transacao);</span>
+<span class="fc" id="L35">        System.out.println(transacaorepository);</span>
 
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (pessoaSaldo.compareTo(precoLivro) &gt;= 0) {</span>
-<span class="nc" id="L35">            System.out.println(pessoa.getNome() + &quot; possui saldo para compra do livro &quot; + livro.getNome());</span>
-<span class="nc" id="L36">            BigDecimal custo = pessoaSaldo.subtract(precoLivro);</span>
-<span class="nc" id="L37">            pessoa.setSaldo(custo);</span>
-<span class="nc" id="L38">            livro.setQuantidade(livro.getQuantidade() - 1);</span>
-<span class="nc" id="L39">            transacaorepository.save(transacao);</span>
-<span class="nc" id="L40">        } else {</span>
-<span class="nc" id="L41">            System.out.println(pessoa.getNome() + &quot; não possui saldo para compra&quot;);</span>
+<span class="pc bpc" id="L38" title="1 of 4 branches missed.">        if (pessoaSaldo.compareTo(precoLivro) &gt;= 0 &amp;&amp; livro.getQuantidade() &gt; 0) {</span>
+<span class="fc" id="L39">            System.out.println(pessoa.getNome() + &quot; possui saldo para compra do livro &quot; + livro.getNome());</span>
+<span class="fc" id="L40">            BigDecimal custo = pessoaSaldo.subtract(precoLivro);</span>
+<span class="fc" id="L41">            pessoa.setSaldo(custo);</span>
+<span class="fc" id="L42">            livro.setQuantidade(livro.getQuantidade() - 1);</span>
+<span class="fc" id="L43">            transacao.setStatus(StatusEnum.COMPRA);</span>
+<span class="fc" id="L44">            transacaorepository.save(transacao);</span>
+<span class="fc" id="L45">        } else {</span>
+<span class="fc" id="L46">            System.out.println(pessoa.getNome() + &quot; não possui saldo para compra/Livro não existe no estoque!&quot;);</span>
         }
-<span class="nc" id="L43">    }</span>
+<span class="fc" id="L48">    }</span>
+
+    public Transacao cancelarTransacao(Integer transacaoId) {
+<span class="nc" id="L51">        Transacao transacao = transacaorepository.getReferenceById(transacaoId);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if(transacao.getStatus().equals(StatusEnum.COMPRA)) {</span>
+<span class="nc" id="L53">            Livro livro = transacao.getLivro();</span>
+<span class="nc" id="L54">            livro.setQuantidade(livro.getQuantidade() + 1);</span>
+<span class="nc" id="L55">            Pessoa pessoa = transacao.getPessoa();</span>
+<span class="nc" id="L56">            pessoa.setSaldo(pessoa.getSaldo().add(livro.getPreco()));</span>
+<span class="nc" id="L57">            transacao.cancelarTransacao();</span>
+        }
+
+<span class="nc" id="L60">        return transacao;</span>
+    }
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

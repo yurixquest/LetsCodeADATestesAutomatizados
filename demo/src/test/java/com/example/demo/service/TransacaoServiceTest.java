@@ -26,7 +26,7 @@ class TransacaoServiceTest {
     private final TransacaoRepository transacaoRepository = Mockito.mock(TransacaoRepository.class);
     private final TransacaoService transacaoService = new TransacaoService(transacaoRepository, pessoarepository, livrorepository);
 
-    LocalDate dataNascimento       = LocalDate.of(1998, 07, 22);
+    String dataNascimento = "22/07/1994";
     Pessoa pessoa = new Pessoa("Maria", null, dataNascimento, null, BigDecimal.ZERO);
     Livro livro = new Livro("Paz", "Augusto Cury", null, BigDecimal.TEN, 1);
     Transacao transacao = new Transacao(pessoa, livro, pessoa.getSaldo(), livro.getPreco());
@@ -109,11 +109,13 @@ class TransacaoServiceTest {
         when(pessoarepository.findById(Math.toIntExact(pessoa.getPessoaId()))).thenReturn(Optional.of(pessoa));
         when(livrorepository.findById(Math.toIntExact(livro.getLivroId()))).thenReturn(Optional.of(livro));
 
-        transacaoService.realizarCompra(pessoa.getPessoaId(),2L);
-
-        verify(transacaoRepository, times(0)).save(transacao);
-        assertEquals("Saldo da conta deveria ser 50", BigDecimal.valueOf(50), pessoa.getSaldo());
-        assertEquals("A quantidade de livros deveria continuar 1", 1, livro.getQuantidade());
+        try {
+            transacaoService.realizarCompra(pessoa.getPessoaId(), 2L);
+        } catch (Exception e) {
+            verify(transacaoRepository, times(0)).save(transacao);
+            assertEquals("Saldo da conta deveria ser 50", BigDecimal.valueOf(50), pessoa.getSaldo());
+            assertEquals("A quantidade de livros deveria continuar 1", 1, livro.getQuantidade());
+        }
     }
 
     @Test

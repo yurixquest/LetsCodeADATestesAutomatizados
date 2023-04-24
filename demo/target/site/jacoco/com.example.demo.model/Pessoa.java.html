@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-<span class="nc" id="L13">@Setter</span>
+<span class="fc" id="L13">@Setter</span>
 @Getter
 @Entity
 @JsonIgnoreProperties({&quot;hibernateLazyInitializer&quot;, &quot;handler&quot;})
@@ -21,43 +21,37 @@ public class Pessoa {
     @SequenceGenerator(name = &quot;pessoaSequenceGenerator&quot;, sequenceName = &quot;PESSOA_SQ&quot;, initialValue = 100)
     @GeneratedValue(generator = &quot;pessoaSequenceGenerator&quot;, strategy = GenerationType.SEQUENCE)
     @Column(updatable = false)
-<span class="nc" id="L24">    private long pessoaId;</span>
+<span class="fc" id="L24">    private long pessoaId;</span>
 
     @Column(name = &quot;DATA_NASCIMENTO&quot;)
-<span class="nc" id="L27">    private LocalDate dataNascimento;</span>
+<span class="fc" id="L27">    private String dataNascimento;</span>
 
     @Column(name = &quot;CPF&quot;)
-<span class="nc" id="L30">    private String cpf;</span>
+<span class="fc" id="L30">    private String cpf;</span>
 
     @Column(name = &quot;EMAIL&quot;)
-<span class="nc" id="L33">    private String email;</span>
+<span class="fc" id="L33">    private String email;</span>
 
     @Column(name = &quot;NOME&quot;)
-<span class="nc" id="L36">    private String nome;</span>
+<span class="fc" id="L36">    private String nome;</span>
 
     @Column(name = &quot;SALDO&quot;)
-<span class="nc" id="L39">    private BigDecimal saldo;</span>
+<span class="fc" id="L39">    private BigDecimal saldo;</span>
 
-<span class="nc" id="L41">    public Pessoa(String nome, String cpf, LocalDate dataNascimento, String email, BigDecimal saldo) {</span>
-<span class="nc" id="L42">        setDataNascimento(dataNascimento);</span>
-<span class="nc" id="L43">        this.cpf = cpf;</span>
-<span class="nc" id="L44">        this.nome = nome;</span>
-<span class="nc" id="L45">        this.email = email;</span>
-<span class="nc" id="L46">        this.saldo = saldo;</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L41">    public Pessoa(String nome, String cpf, String dataNascimento, String email, BigDecimal saldo) {</span>
+<span class="fc" id="L42">        setDataNascimento(dataNascimento);</span>
+<span class="fc" id="L43">        this.cpf = cpf;</span>
+<span class="fc" id="L44">        this.nome = nome;</span>
+<span class="fc" id="L45">        this.email = email;</span>
+<span class="fc" id="L46">        this.saldo = saldo;</span>
+<span class="fc" id="L47">    }</span>
 <span class="fc" id="L48">    protected Pessoa() {</span>
 <span class="fc" id="L49">    }</span>
 
     //@OneToMany(mappedBy = &quot;pessoa&quot;)
     //private List&lt;Transacao&gt; transacoes;
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (dataNascimento.plusYears(18).isAfter(LocalDate.now())) {</span>
-<span class="nc" id="L56">            System.out.println(&quot;Valor inválido&quot;);</span>
-        } else {
-<span class="nc" id="L58">            this.dataNascimento = dataNascimento;</span>
-        }
-<span class="nc" id="L60">    }</span>
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

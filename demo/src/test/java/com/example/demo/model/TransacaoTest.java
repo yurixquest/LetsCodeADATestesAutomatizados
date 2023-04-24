@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TransacaoTest {
-    LocalDate dataNascimento = LocalDate.of(1998, 8, 30);
+    String dataNascimento = "30/08/1998";
     Pessoa pessoa = new Pessoa("Ana", "123.456.789", dataNascimento, "ana@gmail.com", BigDecimal.TEN);
     Livro livro = new Livro("Ansiedade", "Augusto Cury", "Português", BigDecimal.TEN, 1);
     BigDecimal saldo = BigDecimal.valueOf(100.0);

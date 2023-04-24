@@ -33,22 +33,15 @@ class PessoaControllerTest {
 
     private final String baseUri = "/pessoas";
 
-    @Test
-    void getPessoa() {
-    }
-
-    @Test
-    void getPessoas() {
-    }
 
     @Test
     void createPessoaComNome() throws Exception {
 
         final PessoaRepository repository;
         BigDecimal valor = BigDecimal.TEN;
-        Pessoa criarpessoa = new Pessoa("Luis Antonio", "000.000.000-00", LocalDate.of(1944, 8, 8), "email@email.com.br", valor);
+        Pessoa criarpessoa = new Pessoa("Luis Antonio", "000.000.000-00", "08/08/1994", "email@email.com.br", valor);
 
-        String response = mvc.perform(MockMvcRequestBuilders.post(baseUri)
+        String response = mvc.perform(MockMvcRequestBuilders.post("/pessoas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(criarpessoa)))
                 .andExpect(status().isCreated()).
@@ -59,7 +52,4 @@ class PessoaControllerTest {
         assertEquals(criarpessoa.getNome(),nomepessoa, "Deveria ser criado um objeto do tipo pessoa");
     }
 
-    @Test
-    void atualizaPessoa() {
-    }
 }

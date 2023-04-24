@@ -31,15 +31,23 @@ import java.util.List;
 
 
     @PostMapping(&quot;/{pessoaId}/comprar/{livroId}&quot;)
-    public ResponseEntity&lt;Void&gt; realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
-<span class="nc" id="L35">        transacaoService.realizarCompra(pessoaId, livroId);</span>
-<span class="nc" id="L36">        return ResponseEntity.status(HttpStatus.CREATED).build();</span>
+    @ResponseStatus(HttpStatus.CREATED)
+    public void realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
+<span class="nc" id="L36">        transacaoService.realizarCompra(pessoaId, livroId);</span>
+<span class="nc" id="L37">    }</span>
 
+    @PutMapping(&quot;/{transacaoId}&quot;)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Transacao cancelarCompra(@PathVariable Integer transacaoId) {
+<span class="nc" id="L42">        return transacaoService.cancelarTransacao(transacaoId);</span>
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List&lt;Transacao&gt; getTransacoes() {
-<span class="nc" id="L42">        return repository.findAll();</span>
+<span class="nc" id="L48">        return repository.findAll();</span>
     }
+
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,6 +23,12 @@ public class LivroController {
     @ResponseStatus(HttpStatus.CREATED)
     public Livro createLivro(@RequestBody Livro livro) {
         return repository.save(livro);
+    }
+
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<Livro> getLivro(@PathVariable int id) {
+        return repository.findById(id);
     }
 
     @GetMapping
