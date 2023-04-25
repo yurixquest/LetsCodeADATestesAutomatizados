@@ -21,7 +21,7 @@ public class Livro {
     @SequenceGenerator(name = "livroSequenceGenerator", sequenceName = "LIVRO_SQ", initialValue = 10000)
     @GeneratedValue(generator = "livroSequenceGenerator", strategy = GenerationType.SEQUENCE)
     @Column(updatable = false)
-    private long livroId;
+    private Long livroId;
 
     @Column(name = "NOME")
     private String nome;
@@ -33,7 +33,7 @@ public class Livro {
     private String autor;
 
     @Column(name = "QTD")
-    private int quantidade;
+    private Integer quantidade;
 
     @Column(name = "PRECO")
     private BigDecimal preco;
