@@ -41,10 +41,10 @@ public class TransacaoService {
             pessoa.setSaldo(custo);
             livro.setQuantidade(livro.getQuantidade() - 1);
             transacao.setStatus(StatusEnum.COMPRA);
-            transacaorepository.save(transacao);
         } else {
             transacao.setStatus(StatusEnum.NEGADO);
         }
+        transacaorepository.save(transacao);
         return transacao.getStatus();
     }
 

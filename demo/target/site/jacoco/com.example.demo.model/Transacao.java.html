@@ -28,7 +28,7 @@ public class Transacao {
     private Livro livro;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = &quot;STATUS_COMPRA&quot;)
+    @Column(name = &quot;statusCompra&quot;)
 <span class="fc" id="L32">    private StatusEnum statusCompra;</span>
 
 
@@ -78,7 +78,7 @@ public class Transacao {
 <span class="fc" id="L78">    }</span>
 
     public StatusEnum getStatus() {
-<span class="fc" id="L81">        return statusCompra;</span>
+<span class="fc" id="L81">        return this.statusCompra;</span>
     }
 
     public void setStatus(StatusEnum statusCompra) {
@@ -94,8 +94,8 @@ public class Transacao {
 <span class="fc" id="L94">    }</span>
 
     public Transacao cancelarTransacao(){
-<span class="nc" id="L97">        setStatus(StatusEnum.CANCELAMENTO);</span>
-<span class="nc" id="L98">        return this;</span>
+<span class="fc" id="L97">        setStatus(StatusEnum.CANCELAMENTO);</span>
+<span class="fc" id="L98">        return this;</span>
     }
 
 <span class="fc" id="L101">    protected Transacao(){};</span>

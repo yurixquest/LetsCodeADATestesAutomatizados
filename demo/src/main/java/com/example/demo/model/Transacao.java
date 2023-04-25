@@ -4,7 +4,6 @@ import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -28,7 +27,7 @@ public class Transacao {
     private Livro livro;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "STATUS_COMPRA")
+    @Column(name = "statusCompra")
     private StatusEnum statusCompra;
 
 
@@ -39,11 +38,6 @@ public class Transacao {
     public int getId() {
         return transacaoId;
     }
-    //}
-
-    //public void setId(Long id) {
-     //   this.transacaoId = Math.toIntExact(id);
-    //}
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -78,7 +72,7 @@ public class Transacao {
     }
 
     public StatusEnum getStatus() {
-        return statusCompra;
+        return this.statusCompra;
     }
 
     public void setStatus(StatusEnum statusCompra) {

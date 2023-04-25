@@ -24,7 +24,7 @@ public class TransacaoService {
 
 
 
-    public void realizarCompra(Long pessoaId, Long livroId) {
+    public StatusEnum realizarCompra(Long pessoaId, Long livroId) {
 <span class="fc" id="L28">        Pessoa pessoa = pessoaRepository.findById(Math.toIntExact(pessoaId)).orElseThrow();</span>
 <span class="fc" id="L29">        Livro livro = livroRepository.findById(Math.toIntExact(livroId)).orElseThrow();</span>
 <span class="fc" id="L30">        Transacao transacao = new Transacao(pessoa, livro, pessoa.getSaldo(), livro.getPreco());</span>
@@ -41,23 +41,24 @@ public class TransacaoService {
 <span class="fc" id="L41">            pessoa.setSaldo(custo);</span>
 <span class="fc" id="L42">            livro.setQuantidade(livro.getQuantidade() - 1);</span>
 <span class="fc" id="L43">            transacao.setStatus(StatusEnum.COMPRA);</span>
-<span class="fc" id="L44">            transacaorepository.save(transacao);</span>
-<span class="fc" id="L45">        } else {</span>
-<span class="fc" id="L46">            System.out.println(pessoa.getNome() + &quot; não possui saldo para compra/Livro não existe no estoque!&quot;);</span>
+<span class="fc" id="L44">        } else {</span>
+<span class="fc" id="L45">            transacao.setStatus(StatusEnum.NEGADO);</span>
         }
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L47">        transacaorepository.save(transacao);</span>
+<span class="fc" id="L48">        return transacao.getStatus();</span>
+    }
 
     public Transacao cancelarTransacao(Integer transacaoId) {
-<span class="nc" id="L51">        Transacao transacao = transacaorepository.getReferenceById(transacaoId);</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        if(transacao.getStatus().equals(StatusEnum.COMPRA)) {</span>
-<span class="nc" id="L53">            Livro livro = transacao.getLivro();</span>
-<span class="nc" id="L54">            livro.setQuantidade(livro.getQuantidade() + 1);</span>
-<span class="nc" id="L55">            Pessoa pessoa = transacao.getPessoa();</span>
-<span class="nc" id="L56">            pessoa.setSaldo(pessoa.getSaldo().add(livro.getPreco()));</span>
-<span class="nc" id="L57">            transacao.cancelarTransacao();</span>
+<span class="nc" id="L52">        Transacao transacao = transacaorepository.getReferenceById(transacaoId);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if(transacao.getStatus().equals(StatusEnum.COMPRA)) {</span>
+<span class="nc" id="L54">            Livro livro = transacao.getLivro();</span>
+<span class="nc" id="L55">            livro.setQuantidade(livro.getQuantidade() + 1);</span>
+<span class="nc" id="L56">            Pessoa pessoa = transacao.getPessoa();</span>
+<span class="nc" id="L57">            pessoa.setSaldo(pessoa.getSaldo().add(livro.getPreco()));</span>
+<span class="nc" id="L58">            transacao.cancelarTransacao();</span>
         }
 
-<span class="nc" id="L60">        return transacao;</span>
+<span class="nc" id="L61">        return transacao;</span>
     }
 }
 

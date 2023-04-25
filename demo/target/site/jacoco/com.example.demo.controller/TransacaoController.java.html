@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransacaoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">demo</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.controller</a> &gt; <span class="el_source">TransacaoController.java</span></div><h1>TransacaoController.java</h1><pre class="source lang-java linenums">package com.example.demo.controller;
 
 
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.model.Livro;
 import com.example.demo.model.Pessoa;
 import com.example.demo.model.Transacao;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(&quot;/transacoes&quot;)
-<span class="fc" id="L23">public class TransacaoController {</span>
+<span class="fc" id="L24">public class TransacaoController {</span>
 
     @Autowired
     private TransacaoService transacaoService;
@@ -30,22 +31,22 @@ import java.util.List;
     private TransacaoRepository repository;
 
 
-    @PostMapping(&quot;/{pessoaId}/comprar/{livroId}&quot;)
+    @PostMapping(&quot;/{trasacaoId}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
-    public void realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
-<span class="nc" id="L36">        transacaoService.realizarCompra(pessoaId, livroId);</span>
-<span class="nc" id="L37">    }</span>
+    public StatusEnum realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
+<span class="nc" id="L37">         return transacaoService.realizarCompra(pessoaId, livroId);</span>
+    }
 
     @PutMapping(&quot;/{transacaoId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Transacao cancelarCompra(@PathVariable Integer transacaoId) {
-<span class="nc" id="L42">        return transacaoService.cancelarTransacao(transacaoId);</span>
+<span class="nc" id="L43">        return transacaoService.cancelarTransacao(transacaoId);</span>
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List&lt;Transacao&gt; getTransacoes() {
-<span class="nc" id="L48">        return repository.findAll();</span>
+<span class="nc" id="L49">        return repository.findAll();</span>
     }
 
 

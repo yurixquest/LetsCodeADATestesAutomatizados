@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.model.Livro;
 import com.example.demo.model.Pessoa;
 import com.example.demo.model.Transacao;
@@ -30,10 +31,10 @@ public class TransacaoController {
     private TransacaoRepository repository;
 
 
-    @PostMapping("/{pessoaId}/comprar/{livroId}")
+    @PostMapping("/{trasacaoId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
-        transacaoService.realizarCompra(pessoaId, livroId);
+    public StatusEnum realizarCompra(@PathVariable Long pessoaId, @PathVariable Long livroId) {
+         return transacaoService.realizarCompra(pessoaId, livroId);
     }
 
     @PutMapping("/{transacaoId}")

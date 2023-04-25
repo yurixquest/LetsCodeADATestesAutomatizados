@@ -52,4 +52,19 @@ class PessoaControllerTest {
         assertEquals(criarpessoa.getNome(),nomepessoa, "Deveria ser criado um objeto do tipo pessoa");
     }
 
+    @Test
+    void createPessoaComDadosInvalido() throws Exception {
+        final PessoaRepository repository;
+        BigDecimal valor = BigDecimal.TEN;
+        Pessoa criarpessoa = new Pessoa(null, "000.000.000-00", "08/08/1994", "email@email.com.br", valor);
+
+        String response = mvc.perform(MockMvcRequestBuilders.post("/pessoas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(criarpessoa)))
+                .andExpect(status().isCreated()).
+                andReturn().getResponse().getContentAsString();
+
+        assertEquals(criarpessoa.getNome(),null, "Deveria ser criado um objeto do tipo pessoa");
+    }
+
 }
